@@ -15,7 +15,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program. If not, see <https://www.gnu.org/licenses/>.
 
-import sys, os.path, configparser
+import sys, os, configparser, redist
 from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 
@@ -25,49 +25,10 @@ args = sys.argv[1:]
 
 key = RSA.generate(2048)
 
-def genConfigFile():
-    """Generates a config file"""
-
-    with open('data/config.ini', 'w') as f:
-        f.write("[Scheduler]\n")
-
-        f.write("; The login page to target\n")
-        f.write("gateway = \n\n")
-
-        f.write("; The last name of the teacher you want to attend on each day of the week\n")
-        f.write("; Enter an empty string for none\n")
-        f.write("monday_name = \n")
-        f.write("tuesday_name = \n")
-        f.write("wednesday_name = \n")
-        f.write("thursday_name = \n")
-        f.write("friday_name = \n\n")
-
-        f.write("[Auth]\n")
-
-        f.write("; Decides whether or not to encrypt\n")
-        f.write("; STRONGLY RECOMMNEDED TO KEEP THIS ENABLED\n")
-        f.write("encrypted = True\n\n")
-
-        f.write("; The sign in method to use ((0) Edficiency, (1) Google, (2) Microsoft)\n")
-        f.write("; Currently, sign in with Microsoft and accounts with 2FA are not supported\n")
-        f.write("sign_in_method = 0\n\n")
-
-        f.write("; The path to take to the public key file\n")
-        f.write("public_key_path = data/public.pem\n\n")
-
-        f.write("; The path to take to the private key file\n")
-        f.write("private_key_path = data/private.pem\n\n")
-
-        f.write("; Path to file containing the email\n")
-        f.write("email_path = data/email.bin\n\n")
-        
-        f.write("; Path to file containing the password\n")
-        f.write("password_path = data/pass.bin")
-
 conf = configparser.ConfigParser()
-if not os.path.isfile('data/config.ini'):
-    genConfigFile()
-conf.read('data/config.ini')
+if not os.path.isfile(os.path.join('data','config.ini')):
+    redist.genConfigFile()
+conf.read(os.path.join('data','config.ini'))
 
 def genPrivateKey():
     """Generates a private key"""
