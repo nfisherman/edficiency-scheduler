@@ -36,7 +36,7 @@ conf = configparser.ConfigParser()
 conf.read(os.path.join('data', 'config.ini'))
 public_key = conf['Auth']['public_key_path']
 
-exec(redist.genLogger(conf['Logging']['log_path']))
+exec(compile(redist.genLogger(conf['Logging']['log_path']), 'mulstring', 'exec'))
 
 while len(os.listdir(conf['Logging']['log_path'])) > int(conf['Logging']['max_logs']) and not int(conf['Logging']['max_logs']) == 0:
   min = conf['Logging']['log_path'] + '/' + os.listdir(conf['Logging']['log_path'])[0]

@@ -31,7 +31,7 @@ def genLogger(path, level=logging.DEBUG, format="[%(asctime)s][%(levelname)s]: %
 
     logFile = os.path.join(path, "log-{}-{}-{}-{}{}".format(today.year,today.month,today.day,hour,minute))
     logging.basicConfig(filename=logFile,format=format,level=logging.DEBUG,force=True)
-    return "logging.basicConfig(filename={},format={},level={},force=True)\nlogger = logging.getLogger(__name__)".format(logFile, format, level)
+    return "import logging\nlogging.basicConfig(filename=\"{}\",format=\"{}\",level={},force=True)\nlogger = logging.getLogger(__name__)".format(logFile, format, level)
 
 def genConfigFile():
     """Generates a config file"""
